@@ -1,3 +1,7 @@
+strava_secrets.py
+strava_tokens.json
+*.csv
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
