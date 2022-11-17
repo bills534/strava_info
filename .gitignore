@@ -1,6 +1,8 @@
 strava_secrets.py
 strava_tokens.json
 *.csv
+*.json
+*.png
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

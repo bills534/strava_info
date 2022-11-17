@@ -9,7 +9,13 @@ import seaborn as sns
 from matplotlib.ticker import MaxNLocator
 from strava_secrets import *
 
-REQUEST_LIMIT = 100
+REQUEST_LIMIT = 90
+
+
+def dump_results(json_data, dump_filename, mode='w'):
+    with open(dump_filename, mode) as outfile:
+        json.dump(json_data, outfile)
+
 
 def get_token():
     ## Get the tokens from file to connect to Strava
@@ -46,7 +52,7 @@ def get_activities(access_token, from_date, to_date):
         }
     response = requests.request("GET", url, headers=headers, data=payload)
     activities = response.json()
-    # print(activities)
+    dump_results(activities, 'activities.json')
     return activities
 
 def get_kudos(access_token, activity_id):
@@ -57,13 +63,13 @@ def get_kudos(access_token, activity_id):
         }
     response = requests.request("GET", url, headers=headers, data=payload)
     data = response.json()
-    print(data)
+    dump_results(data, 'kudos.json', 'a')
     return data
 
 def transform(access_token, activities):
     request_count = 0
     for act in activities:
-        if request_count > REQUEST_LIMIT:
+        if request_count < REQUEST_LIMIT:
             if act["private"] == False:
                 activity_id = act['id']
                 nb_kudos = act['kudos_count']
