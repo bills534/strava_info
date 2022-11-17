@@ -63,7 +63,8 @@ def get_kudos(access_token, activity_id):
         }
     response = requests.request("GET", url, headers=headers, data=payload)
     data = response.json()
-    dump_results(data, 'kudos.json', 'a')
+    dump_output = f'{activity_id},{data}\r\n'
+    dump_results(data, 'kudos.csv', 'a')
     return data
 
 def transform(access_token, activities):
